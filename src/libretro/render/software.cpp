@@ -147,14 +147,67 @@ void MelonDsDs::SoftwareRenderState::DrawCursor(const InputState& input, const C
 
     uvec2 start = clamp(transformedTouch - ivec2(cursorSize), ivec2(0), ivec2(buffer.Size()));
     uvec2 end = clamp(transformedTouch + ivec2(cursorSize), ivec2(0), ivec2(buffer.Size()));
+    int scale;
+    if (screenLayout.Layout() == ScreenLayout::LargescreenBottom ||
+        screenLayout.Layout() == ScreenLayout::FlippedLargescreenBottom) {
+        scale = screenLayout.HybridRatio();  // e.g., 2, 3, ...
+    } else {
+        scale = 1;
+    }
+    int centerX = (start.x + end.x) / 2;
+    int centerY = (start.y + end.y) / 2;
+    // scale >= 1 (integer)
 
-    for (uint32_t y = start.y; y < end.y; y++) {
-        for (uint32_t x = start.x; x < end.x; x++) {
-            // TODO: Replace with SIMD (does GLM have a SIMD version of this?)
-            uint32_t& pixel = buffer[uvec2(x, y)];
-            pixel = (0xFFFFFF - pixel) | 0xFF000000;
+    // Framebuffer size
+    const int W = int(buffer.Size().x);
+    const int H = int(buffer.Size().y);
+    const int cx = int(centerX);
+    const int cy = int(centerY);
+
+    // Safe bounds for the scaled 5x5 base area (from base coords -2..+2)
+    // dest x range for base b ∈ [-2..+2] is [cx + b*scale .. cx + b*scale + (scale-1)]
+    const int sx = std::max(0,                cx - 2*scale);
+    const int sy = std::max(0,                cy - 2*scale);
+    const int ex = std::min(W - 1,            cx + 2*scale + (scale - 1));
+    const int ey = std::min(H - 1,            cy + 2*scale + (scale - 1));
+
+    // Floor-division helper for symmetric mapping
+    auto floor_div = [](int a, int b) {
+        int q = a / b, r = a % b;
+        return (r && (a < 0)) ? (q - 1) : q;
+    };
+
+    auto set_px = [&](int x, int y, uint32_t c) {
+        uint32_t& p = buffer[uvec2(x, y)];
+        p = c;
+    };
+
+    // Base pattern (unscaled):
+    // - White fill: |bx|<=1 && |by|<=1           --> 3x3
+    // - Black ring: (|by|==2 && |bx|<=1) || (|bx|==2 && |by|<=1)
+    // - Corners (|bx|==2 && |by|==2) are skipped
+    for (int y = sy; y <= ey; ++y) {
+        for (int x = sx; x <= ex; ++x) {
+            const int bx = floor_div(x - cx, scale);  // base-space X in [-2..2]
+            const int by = floor_div(y - cy, scale);  // base-space Y in [-2..2]
+
+            const int abx = std::abs(bx);
+            const int aby = std::abs(by);
+
+            bool inWhite3x3 = (abx <= 1 && aby <= 1);
+            bool isCorner   = (abx == 2 && aby == 2);
+            bool inRing     = !isCorner &&
+                            ( (aby == 2 && abx <= 1) || (abx == 2 && aby <= 1) );
+
+            if (inWhite3x3) {
+                set_px(x, y, 0xFFFFFFFF); // ARGB opaque white
+            } else if (inRing) {
+                set_px(x, y, 0xFF000000); // ARGB opaque black
+            }
+            // else: outside the 4x4-without-corners ring → leave untouched
         }
     }
+
 }
 
 void MelonDsDs::SoftwareRenderState::CombineScreens(

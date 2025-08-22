@@ -394,12 +394,34 @@ void MelonDsDs::OpenGLRenderState::Render(
     }
 
     if (!nds.IsLidClosed() && input.CursorVisible()) {
-        float cursorSize = config.CursorSize();
         ivec2 touch = input.TouchPosition();
-        GL_ShaderConfig.cursorPos[0] = ((float) touch.x - cursorSize) / NDS_SCREEN_WIDTH;
-        GL_ShaderConfig.cursorPos[1] = (((float) touch.y - cursorSize) / (NDS_SCREEN_WIDTH * 1.5f)) + 0.5f;
-        GL_ShaderConfig.cursorPos[2] = ((float) touch.x + cursorSize) / NDS_SCREEN_WIDTH;
-        GL_ShaderConfig.cursorPos[3] = (((float) touch.y + cursorSize) / ((float) NDS_SCREEN_WIDTH * 1.5f)) + 0.5f;
+
+        // DS screen dimensions
+        const int W = NDS_SCREEN_WIDTH;   // e.g. 256
+        const int H = NDS_SCREEN_HEIGHT;  // e.g. 192
+
+        // Pixel bounds for a 5×5 centered on (touch.x, touch.y)
+        int leftPx   = touch.x - 2;   // inclusive
+        int rightPx  = touch.x + 3;   // exclusive
+        int topPx    = touch.y - 2;   // inclusive
+        int bottomPx = touch.y + 3;   // exclusive
+
+        // Clamp to valid ranges (right/bottom can equal W/H in half-open form)
+        leftPx   = std::max(0, leftPx);
+        topPx    = std::max(0, topPx);
+        rightPx  = std::min(W, rightPx);
+        bottomPx = std::min(H, bottomPx);
+
+        // Normalization: X maps [0..W] → [0..1]
+        // Bottom screen Y maps [0..H] → [0.5..1.0]
+        const float invW = 1.0f / float(W);
+        const float invH = 0.5f / float(H);
+
+        GL_ShaderConfig.cursorPos[0] = float(leftPx)   * invW;        // left
+        GL_ShaderConfig.cursorPos[2] = float(rightPx)  * invW;        // right
+        GL_ShaderConfig.cursorPos[1] = 0.5f + float(topPx)    * invH; // top
+        GL_ShaderConfig.cursorPos[3] = 0.5f + float(bottomPx) * invH; // bottom
+
         GL_ShaderConfig.cursorVisible = true;
     } else {
         GL_ShaderConfig.cursorVisible = false;

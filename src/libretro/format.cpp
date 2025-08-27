@@ -500,6 +500,12 @@ auto fmt::formatter<MelonDsDs::ScreenLayout>::format(MelonDsDs::ScreenLayout lay
         case MelonDsDs::ScreenLayout::FlippedLargescreenBottom:
             name = "FlippedLargescreenBottom";
             break;
+        case MelonDsDs::ScreenLayout::CenteredLargescreenTop:
+            name = "CenteredLargescreenTop";
+            break;
+        case MelonDsDs::ScreenLayout::CenteredLargescreenBottom:
+            name = "CenteredLargescreenBottom";
+            break;
         default:
             name = "<unknown>";
             break;

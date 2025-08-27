@@ -99,6 +99,23 @@ constexpr mat3 FlippedLargescreenWestMatrix(unsigned resolutionScale, unsigned h
     );
 }
 
+/// For the centered west screen in Centered Largescreen Layout
+constexpr mat3 CenterLargescreenWestMatrix(unsigned resolutionScale, unsigned hybridRatio) noexcept {
+    using namespace MelonDsDs;
+    return math::ts<float>(
+        vec2(resolutionScale * NDS_SCREEN_WIDTH, 0),
+        vec2(resolutionScale * hybridRatio)
+    );
+}
+
+/// For the small east screen in Centered Largescreen Layout
+constexpr mat3 CenterLargescreenEastMatrix(unsigned resolutionScale, unsigned hybridRatio) noexcept {
+    using namespace MelonDsDs;
+    return math::ts<float>(
+        vec2((resolutionScale * hybridRatio * NDS_SCREEN_WIDTH)+(resolutionScale * NDS_SCREEN_WIDTH), (resolutionScale * NDS_SCREEN_HEIGHT * (hybridRatio - 1)) / 2.0),
+        vec2(resolutionScale)
+    );
+}
 /// For the west hybrid screen
 constexpr mat3 HybridWestMatrix(unsigned resolutionScale, unsigned hybridRatio) noexcept {
     using namespace MelonDsDs;
@@ -181,6 +198,10 @@ mat3 MelonDsDs::ScreenLayoutData::GetTopScreenMatrix(unsigned scale) const noexc
             return LargescreenEastMatrix(scale, hybridRatio);
         case ScreenLayout::FlippedLargescreenBottom:
             return FlippedLargescreenWestMatrix(scale, hybridRatio);
+        case ScreenLayout::CenteredLargescreenTop:
+            return CenterLargescreenWestMatrix(scale, 4);
+        case ScreenLayout::CenteredLargescreenBottom:
+            return CenterLargescreenEastMatrix(scale, 4);
         default:
             return mat3(1);
     }
@@ -214,6 +235,10 @@ mat3 MelonDsDs::ScreenLayoutData::GetBottomScreenMatrix(unsigned scale) const no
             return LargescreenEastMatrix(scale, hybridRatio);
         case ScreenLayout::FlippedLargescreenTop:
             return FlippedLargescreenWestMatrix(scale, hybridRatio);
+        case ScreenLayout::CenteredLargescreenTop:
+            return CenterLargescreenEastMatrix(scale, 4);
+        case ScreenLayout::CenteredLargescreenBottom:
+            return CenterLargescreenWestMatrix(scale, 4);
         default:
             return mat3(1);
     }

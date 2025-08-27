@@ -155,6 +155,8 @@ namespace MelonDsDs {
         LargescreenBottom = 14,
         FlippedLargescreenTop = 15,
         FlippedLargescreenBottom = 16,
+        CenteredLargescreenTop = 17,
+        CenteredLargescreenBottom = 18,
     };
 
     enum class HybridSideScreenDisplay {

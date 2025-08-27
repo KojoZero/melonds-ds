@@ -91,6 +91,8 @@ namespace MelonDsDs {
             case ScreenLayout::LargescreenBottom:
             case ScreenLayout::FlippedLargescreenTop:
             case ScreenLayout::FlippedLargescreenBottom:
+            case ScreenLayout::CenteredLargescreenTop:
+            case ScreenLayout::CenteredLargescreenBottom:
                 return true;
             default:
                 return false;

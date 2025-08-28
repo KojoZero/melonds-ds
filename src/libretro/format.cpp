@@ -506,6 +506,9 @@ auto fmt::formatter<MelonDsDs::ScreenLayout>::format(MelonDsDs::ScreenLayout lay
         case MelonDsDs::ScreenLayout::CenteredLargescreenBottom:
             name = "CenteredLargescreenBottom";
             break;
+        case MelonDsDs::ScreenLayout::Book:
+            name = "Book";
+            break;
         default:
             name = "<unknown>";
             break;

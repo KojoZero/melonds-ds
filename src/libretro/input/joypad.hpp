@@ -39,7 +39,7 @@ namespace MelonDsDs {
     class JoypadState {
     public:
         void SetConfig(const CoreConfig& config) noexcept;
-        void Update(const InputPollResult& poll) noexcept;
+        void Update(const InputPollResult& poll, const ScreenLayoutData& layout) noexcept;
         void Apply(melonDS::NDS& nds) const noexcept;
         void Apply(CoreConfig& config) const noexcept;
         void Apply(ScreenLayoutData& layout) const noexcept;

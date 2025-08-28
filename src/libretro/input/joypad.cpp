@@ -61,23 +61,38 @@ void JoypadState::SetConfig(const CoreConfig& config) noexcept {
         }                                      \
     } while (false)
 
-void JoypadState::Update(const InputPollResult& poll) noexcept {
+void JoypadState::Update(const InputPollResult& poll, const ScreenLayoutData& layout) noexcept {
     ZoneScopedN(TracyFunction);
     uint32_t ndsInputBits = 0xFFF; // Input bits passed to the emulated DS
 
     // Delicate bit manipulation; do not touch!
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_A, 0, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_B, 1, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_SELECT, 2, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_START, 3, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_RIGHT, 4, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_LEFT, 5, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_UP, 6, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_DOWN, 7, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_R, 8, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_L, 9, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_X, 10, poll.JoypadButtons);
-    ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_Y, 11, poll.JoypadButtons);
+    if (layout.Layout() == ScreenLayout::Book){ //Rotate Dpad and A/B/X/Y Left
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_X, 0, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_A, 1, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_SELECT, 2, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_START, 3, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_UP, 4, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_DOWN, 5, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_LEFT, 6, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_RIGHT, 7, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_R, 8, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_L, 9, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_Y, 10, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_B, 11, poll.JoypadButtons);
+    } else {
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_A, 0, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_B, 1, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_SELECT, 2, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_START, 3, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_RIGHT, 4, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_LEFT, 5, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_UP, 6, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_DOWN, 7, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_R, 8, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_L, 9, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_X, 10, poll.JoypadButtons);
+        ADD_KEY_TO_MASK(RETRO_DEVICE_ID_JOYPAD_Y, 11, poll.JoypadButtons);            
+    }
 
     // We'll send these bits to the DS in Apply() later
     _consoleButtons = ndsInputBits;

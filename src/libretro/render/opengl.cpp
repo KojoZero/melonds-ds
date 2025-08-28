@@ -66,6 +66,7 @@ constexpr array<unsigned, 18> GetPositionIndexes(MelonDsDs::ScreenLayout layout)
 
     switch (layout) {
         case ScreenLayout::TopBottom:
+        case ScreenLayout::Book:
         case ScreenLayout::TurnLeft:
         case ScreenLayout::TurnRight:
         case ScreenLayout::UpsideDown:
@@ -525,6 +526,7 @@ void MelonDsDs::OpenGLRenderState::InitVertices(const ScreenLayoutData& screenLa
 
     switch (layout) {
         case ScreenLayout::TurnRight:
+        case ScreenLayout::Book:
         case ScreenLayout::TurnLeft:
         case ScreenLayout::UpsideDown:
         case ScreenLayout::TopBottom:

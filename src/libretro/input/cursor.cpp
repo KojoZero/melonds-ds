@@ -82,6 +82,9 @@ void CursorState::Update(const CoreConfig& config, const ScreenLayoutData& layou
         retro::ScreenOrientation orientation = layout.EffectiveOrientation();
         _joypadCursorTouching = joypad.IsTouching();
         _joystickRawDirection = joypad.RawCursorDirection();
+        if (layout.Layout() == ScreenLayout::Book){
+            _joystickRawDirection = (i16vec2)glm::rotate(vec2(_joystickRawDirection), GetOrientationAngle(orientation));
+        }
         if (_joystickRawDirection != i16vec2(0)) {
             // If the player moved the joypad's cursor this frame...
             if (_pointerCursorLastUpdate > _joypadCursorLastUpdate) {

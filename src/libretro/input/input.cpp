@@ -123,7 +123,7 @@ void InputState::Update(const CoreConfig& config, const ScreenLayoutData& layout
     pollResult.Timestamp = cpu_features_get_perf_counter();
 
     // Update each device's internal state
-    _joypad.Update(pollResult);
+    _joypad.Update(pollResult, layout);
     if (auto* solar = get_if<SolarSensorState>(&_slot2)) {
         solar->Update(_joypad);
     }

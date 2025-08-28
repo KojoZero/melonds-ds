@@ -176,6 +176,7 @@ mat3 MelonDsDs::ScreenLayoutData::GetTopScreenMatrix(unsigned scale) const noexc
         case ScreenLayout::TopBottom:
         case ScreenLayout::TopOnly:
         case ScreenLayout::LeftRight:
+        case ScreenLayout::Book:
         case ScreenLayout::TurnLeft:
         case ScreenLayout::TurnRight:
         case ScreenLayout::UpsideDown:
@@ -211,6 +212,7 @@ mat3 MelonDsDs::ScreenLayoutData::GetBottomScreenMatrix(unsigned scale) const no
     ZoneScopedN(TracyFunction);
     switch (Layout()) {
         case ScreenLayout::TopBottom:
+        case ScreenLayout::Book:
         case ScreenLayout::TurnLeft:
         case ScreenLayout::TurnRight:
         case ScreenLayout::UpsideDown:

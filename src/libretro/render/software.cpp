@@ -150,6 +150,8 @@ void MelonDsDs::SoftwareRenderState::DrawCursor(const InputState& input, const C
     ivec2 cursorSize = ivec2(config.CursorSize());
     if (screenLayout.Layout() == ScreenLayout::LargescreenBottom || screenLayout.Layout() == ScreenLayout::FlippedLargescreenBottom) {
         cursorSize = ivec2(screenLayout.HybridRatio())*cursorSize;
+    } else if (screenLayout.Layout() == ScreenLayout::CenteredLargescreenBottom) {
+        cursorSize = ivec2(4)*cursorSize;
     }
     ivec2 clampedTouch = clamp(input.TouchPosition(), ivec2(0), ivec2(NDS_SCREEN_WIDTH - 1, NDS_SCREEN_HEIGHT - 1));
     ivec2 transformedTouch = screenLayout.GetBottomScreenMatrix() * vec3(clampedTouch, 1);

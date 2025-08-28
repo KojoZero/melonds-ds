@@ -122,6 +122,7 @@ namespace MelonDsDs {
 
         float BufferAspectRatio() const noexcept {
             switch (Layout()) {
+                case ScreenLayout::Book:
                 case ScreenLayout::TurnLeft:
                 case ScreenLayout::TurnRight:
                     return float(BufferHeight()) / float(BufferWidth());
@@ -172,6 +173,7 @@ namespace MelonDsDs {
 
         bool IsLayoutRotated() const noexcept {
             switch (Layout()) {
+                case ScreenLayout::Book:
                 case ScreenLayout::TurnLeft:
                 case ScreenLayout::TurnRight:
                 case ScreenLayout::UpsideDown:
@@ -267,6 +269,7 @@ namespace MelonDsDs {
 
     constexpr bool LayoutSupportsScreenGap(ScreenLayout layout) noexcept {
         switch (layout) {
+            case ScreenLayout::Book:
             case ScreenLayout::TurnLeft:
             case ScreenLayout::TurnRight:
             case ScreenLayout::UpsideDown:
@@ -280,6 +283,7 @@ namespace MelonDsDs {
 
     constexpr bool LayoutSupportsDirectCopy(ScreenLayout layout) noexcept {
         switch (layout) {
+            case ScreenLayout::Book:
             case ScreenLayout::TurnLeft:
             case ScreenLayout::TurnRight:
             case ScreenLayout::UpsideDown:
@@ -295,6 +299,7 @@ namespace MelonDsDs {
 
     constexpr retro::ScreenOrientation LayoutOrientation(ScreenLayout layout) noexcept {
         switch (layout) {
+            case ScreenLayout::Book:
             case ScreenLayout::TurnLeft:
                 return retro::ScreenOrientation::RotatedLeft;
             case ScreenLayout::TurnRight:
@@ -308,6 +313,7 @@ namespace MelonDsDs {
 
     constexpr float LayoutAngle(ScreenLayout layout) noexcept {
         switch (layout) {
+            case ScreenLayout::Book:
             case ScreenLayout::TurnLeft:
                 return glm::radians(90.f);
             case ScreenLayout::TurnRight:

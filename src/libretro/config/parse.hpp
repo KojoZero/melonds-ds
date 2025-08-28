@@ -157,6 +157,7 @@ namespace MelonDsDs {
         if (value == config::values::FLIPPED_LARGESCREEN_BOTTOM) return ScreenLayout::FlippedLargescreenBottom;
         if (value == config::values::CENTERED_LARGESCREEN_TOP) return ScreenLayout::CenteredLargescreenTop;
         if (value == config::values::CENTERED_LARGESCREEN_BOTTOM) return ScreenLayout::CenteredLargescreenBottom;
+        if (value == config::values::BOOK) return ScreenLayout::Book;
         return std::nullopt;
     }
 

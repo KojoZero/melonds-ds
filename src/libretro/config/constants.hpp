@@ -111,11 +111,6 @@ namespace MelonDsDs::config {
         static constexpr const char *const SCREEN_LAYOUT7 = "melonds_screen_layout7";
         static constexpr const char *const SCREEN_LAYOUT8 = "melonds_screen_layout8";
         static constexpr const char *const SHOW_CURSOR = "melonds_show_cursor";
-        static constexpr const char *const TOUCH_MODE = "melonds_touch_mode";
-        static constexpr const char *const JOYSTICK_CURSOR_DEADZONE = "melonds_joystick_cursor_deadzone";
-        static constexpr const char *const JOYSTICK_CURSOR_MAXSPEED = "melonds_joystick_cursor_maxspeed";
-        static constexpr const char *const JOYSTICK_CURSOR_RESPONSE = "melonds_joystick_cursor_response";
-        static constexpr const char *const JOYSTICK_CURSOR_SPEEDUP = "melonds_joystick_cursor_speedup";
         static constexpr std::array SCREEN_LAYOUTS = {
                 SCREEN_LAYOUT1,
                 SCREEN_LAYOUT2,
@@ -179,6 +174,14 @@ namespace MelonDsDs::config {
         static constexpr const char *const OPENGL_RESOLUTION = "melonds_opengl_resolution";
         static constexpr const char *const RENDER_MODE = "melonds_render_mode";
         static constexpr const char *const THREADED_RENDERER = "melonds_threaded_renderer";
+    }
+    namespace input {
+        static constexpr const char *const CATEGORY = "input";
+        static constexpr const char *const TOUCH_MODE = "melonds_touch_mode";
+        static constexpr const char *const JOYSTICK_CURSOR_DEADZONE = "melonds_joystick_cursor_deadzone";
+        static constexpr const char *const JOYSTICK_CURSOR_MAXSPEED = "melonds_joystick_cursor_maxspeed";
+        static constexpr const char *const JOYSTICK_CURSOR_RESPONSE = "melonds_joystick_cursor_response";
+        static constexpr const char *const JOYSTICK_CURSOR_SPEEDUP = "melonds_joystick_cursor_speedup";
     }
 
     namespace values {

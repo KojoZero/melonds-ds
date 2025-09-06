@@ -66,111 +66,7 @@ namespace MelonDsDs::config::definitions {
             {nullptr, nullptr},
         },
         "3"
-    };
-
-    constexpr retro_core_option_v2_definition TouchMode {
-        retro_core_option_v2_definition {
-            config::screen::TOUCH_MODE,
-            "Touch Mode",
-            nullptr,
-            "Determines how the console's touch screen is emulated.\n"
-            "\n"
-            "Joystick: Use a joystick to control the cursor. "
-            "Recommended if you don't have a mouse or a real touch screen available.\n"
-            "Pointer: Use your mouse or touch screen to control the cursor.\n"
-            "Auto: Use either Joystick or Pointer, depending on which you last touched.\n"
-            "\n"
-            "If unsure, set to Auto.",
-            nullptr,
-            config::screen::CATEGORY,
-            {
-                {MelonDsDs::config::values::JOYSTICK, "Joystick"},
-                {MelonDsDs::config::values::TOUCH, "Pointer"},
-                {MelonDsDs::config::values::AUTO, "Auto"},
-                {nullptr, nullptr},
-            },
-            MelonDsDs::config::values::AUTO
-        },
-    };
-
-    constexpr retro_core_option_v2_definition JoystickCursorDeadzone {
-        config::screen::JOYSTICK_CURSOR_DEADZONE,
-        "Joystick Cursor Deadzone",
-        nullptr,
-        "If the joystick is within this deadzone the cursor will not move.",
-        nullptr,
-        config::screen::CATEGORY,
-        {
-            {"0", "0%"},
-            {"5", "5%"},
-            {"10", "10%"},
-            {"15", "15%"},
-            {"20", "20%"},
-            {"25", "25%"},
-            {"30", "30%"},
-            {"35", "35%"},
-            {nullptr, nullptr},
-        },
-        "5"
-    };
-
-    constexpr retro_core_option_v2_definition JoystickCursorMaxSpeed {
-        config::screen::JOYSTICK_CURSOR_MAXSPEED,
-        "Joystick Cursor Max Speed",
-        nullptr,
-        "Set the max speed for the joystick cursor.",
-        nullptr,
-        config::screen::CATEGORY,
-        {
-            {"1", "1"},
-            {"2", "2"},
-            {"3", "3"},
-            {"4", "4"},
-            {"5", "5"},
-            {"6", "6"},
-            {"7", "7"},
-            {"8", "8"},
-            {"9", "9"},
-            {nullptr, nullptr},
-        },
-        "3"
-    };
-    constexpr retro_core_option_v2_definition JoystickCursorResponse {
-        config::screen::JOYSTICK_CURSOR_RESPONSE,
-        "Joystick Cursor Response",
-        nullptr,
-        "Set the response curve for the joystick cursor.\n"
-        "Linear is a response curve where the cursor speed is 1:1 with the joystick input.\n"
-        "Quadratic is a response curve that reduces the sensitivity near the joystick center for finer control, but increases the sensitivity near the edges",
-        nullptr,
-        config::screen::CATEGORY,
-        {
-            {"100", "Linear"},
-            {"200", "Quadratic"},
-            {nullptr, nullptr},
-        },
-        "200"
-    };
-
-    constexpr retro_core_option_v2_definition JoystickCursorSpeedup {
-        config::screen::JOYSTICK_CURSOR_SPEEDUP,
-        "Joystick Cursor Multiplier",
-        nullptr,
-        "Set the multiplier for the joystick cursor when the speedup/slowdown pointer button (L2 by default) is held",
-        nullptr,
-        config::screen::CATEGORY,
-        {
-            {"33", "33%"},
-            {"50", "50%"},
-            {"66", "66%"},
-            {"150", "150%"},
-            {"200", "200%"},
-            {"250", "250%"},
-            {"300", "300%"},
-            {nullptr, nullptr},
-        },
-        "200"
-    };    
+    };  
     
     constexpr retro_core_option_v2_definition HybridRatio {
         config::screen::HYBRID_RATIO,
@@ -626,11 +522,6 @@ namespace MelonDsDs::config::definitions {
     constexpr std::initializer_list<retro_core_option_v2_definition> ScreenOptionDefinitions {
         ShowCursor,
         CursorTimeout,
-        TouchMode,
-        JoystickCursorDeadzone,
-        JoystickCursorMaxSpeed,
-        JoystickCursorResponse,
-        JoystickCursorSpeedup,
         NumberOfScreenLayouts,
         ScreenLayout1,
         ScreenLayout2,

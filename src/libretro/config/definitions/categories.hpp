@@ -67,6 +67,11 @@ namespace MelonDsDs::config::definitions {
         },
 #endif
         retro_core_option_v2_category {
+            MelonDsDs::config::input::CATEGORY,
+            "Input",
+            "Controller and touchscreen input configuration."
+        },
+        retro_core_option_v2_category {
             MelonDsDs::config::osd::CATEGORY,
             "On-Screen Display & Notifications",
             "Change what extra information is shown on-screen."

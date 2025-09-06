@@ -120,6 +120,7 @@ namespace MelonDsDs::config {
     static void ParseAudioOptions(CoreConfig& config) noexcept;
     static void ParseNetworkOptions(CoreConfig& config) noexcept;
     static void ParseScreenOptions(CoreConfig& config) noexcept;
+    static void ParseInputOptions(CoreConfig& config) noexcept;    
     static void ParseVideoOptions(CoreConfig& config) noexcept;
 
 }
@@ -161,6 +162,7 @@ void MelonDsDs::ParseConfig(CoreConfig& config) noexcept {
     config::ParseAudioOptions(config);
     config::ParseNetworkOptions(config);
     config::ParseScreenOptions(config);
+    config::ParseInputOptions(config);
     config::ParseVideoOptions(config);
 }
 
@@ -752,41 +754,6 @@ static void MelonDsDs::config::ParseScreenOptions(CoreConfig& config) noexcept {
         config.SetCursorTimeout(3);
     }
 
-    if (optional<MelonDsDs::TouchMode> value = ParseTouchMode(get_variable(TOUCH_MODE))) {
-        config.SetTouchMode(*value);
-    } else {
-        retro::warn("Failed to get value for {}; defaulting to {}", TOUCH_MODE, values::AUTO);
-        config.SetTouchMode(TouchMode::Auto);
-    }
-
-    if (optional<int> value = ParseIntegerInList<int>(get_variable(JOYSTICK_CURSOR_DEADZONE), JOYSTICK_CURSOR_DEADZONES)) {
-        config.SetJoystickCursorDeadzone(*value);
-    } else {
-        retro::warn("Failed to get value for {}; defaulting to {}", JOYSTICK_CURSOR_DEADZONE, 0.05);
-        config.SetJoystickCursorDeadzone(5);
-    }
-
-    if (optional<int> value = ParseIntegerInList<int>(get_variable(JOYSTICK_CURSOR_MAXSPEED), JOYSTICK_CURSOR_MAXSPEEDS)) {
-        config.SetJoystickCursorMaxSpeed(*value);
-    } else {
-        retro::warn("Failed to get value for {}; defaulting to {}", JOYSTICK_CURSOR_MAXSPEED, 3);
-        config.SetJoystickCursorMaxSpeed(3);
-    }
-
-    if (optional<int> value = ParseIntegerInList<int>(get_variable(JOYSTICK_CURSOR_RESPONSE), JOYSTICK_CURSOR_RESPONSES)) {
-        config.SetJoystickCursorResponse(*value);
-    } else {
-        retro::warn("Failed to get value for {}; defaulting to {}", JOYSTICK_CURSOR_RESPONSE, 2);
-        config.SetJoystickCursorResponse(200);
-    }
-
-    if (optional<int> value = ParseIntegerInList<int>(get_variable(JOYSTICK_CURSOR_SPEEDUP), JOYSTICK_CURSOR_SPEEDUPS)) {
-        config.SetJoystickCursorSpeedup(*value);
-    } else {
-        retro::warn("Failed to get value for {}; defaulting to {}", JOYSTICK_CURSOR_SPEEDUP, 200);
-        config.SetJoystickCursorSpeedup(200);
-    }
-
     if (optional<MelonDsDs::CursorMode> value = ParseCursorMode(get_variable(SHOW_CURSOR))) {
         config.SetCursorMode(*value);
     } else {
@@ -826,6 +793,49 @@ static void MelonDsDs::config::ParseScreenOptions(CoreConfig& config) noexcept {
     }
 
     config.SetScreenLayouts(layouts);
+}
+
+
+
+static void MelonDsDs::config::ParseInputOptions(CoreConfig& config) noexcept {
+    ZoneScopedN(TracyFunction);
+    using namespace MelonDsDs::config::input;
+    using retro::get_variable;
+
+    if (optional<MelonDsDs::TouchMode> value = ParseTouchMode(get_variable(TOUCH_MODE))) {
+        config.SetTouchMode(*value);
+    } else {
+        retro::warn("Failed to get value for {}; defaulting to {}", TOUCH_MODE, values::AUTO);
+        config.SetTouchMode(TouchMode::Auto);
+    }
+
+    if (optional<int> value = ParseIntegerInList<int>(get_variable(JOYSTICK_CURSOR_DEADZONE), JOYSTICK_CURSOR_DEADZONES)) {
+        config.SetJoystickCursorDeadzone(*value);
+    } else {
+        retro::warn("Failed to get value for {}; defaulting to {}", JOYSTICK_CURSOR_DEADZONE, 0.05);
+        config.SetJoystickCursorDeadzone(5);
+    }
+
+    if (optional<int> value = ParseIntegerInList<int>(get_variable(JOYSTICK_CURSOR_MAXSPEED), JOYSTICK_CURSOR_MAXSPEEDS)) {
+        config.SetJoystickCursorMaxSpeed(*value);
+    } else {
+        retro::warn("Failed to get value for {}; defaulting to {}", JOYSTICK_CURSOR_MAXSPEED, 3);
+        config.SetJoystickCursorMaxSpeed(3);
+    }
+
+    if (optional<int> value = ParseIntegerInList<int>(get_variable(JOYSTICK_CURSOR_RESPONSE), JOYSTICK_CURSOR_RESPONSES)) {
+        config.SetJoystickCursorResponse(*value);
+    } else {
+        retro::warn("Failed to get value for {}; defaulting to {}", JOYSTICK_CURSOR_RESPONSE, 2);
+        config.SetJoystickCursorResponse(200);
+    }
+
+    if (optional<int> value = ParseIntegerInList<int>(get_variable(JOYSTICK_CURSOR_SPEEDUP), JOYSTICK_CURSOR_SPEEDUPS)) {
+        config.SetJoystickCursorSpeedup(*value);
+    } else {
+        retro::warn("Failed to get value for {}; defaulting to {}", JOYSTICK_CURSOR_SPEEDUP, 200);
+        config.SetJoystickCursorSpeedup(200);
+    }
 }
 
 static void MelonDsDs::config::ParseVideoOptions(CoreConfig& config) noexcept {

@@ -27,6 +27,7 @@
 #include "config/definitions/network.hpp"
 #include "config/definitions/osd.hpp"
 #include "config/definitions/screen.hpp"
+#include "config/definitions/input.hpp"
 #include "config/definitions/system.hpp"
 #include "config/definitions/time.hpp"
 #include "config/definitions/video.hpp"
